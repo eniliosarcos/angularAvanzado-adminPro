@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { GetUsers } from '../interfaces/getUsers-interfaces';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
 
@@ -20,6 +21,31 @@ export class UserService {
   }
   constructor(private httpClient: HttpClient) { }
 
+  getUsers(from:number = 0){
+    return this.httpClient.get<GetUsers>(`${base_url}/usuarios?from=${from}`,{headers:this.token})
+                          .pipe(
+                            map(resp => {
+                              const users = resp.users.map( user => {
+                                return new User(
+                                  user.name,
+                                  user.lastName,
+                                  user.email,
+                                  '',
+                                  user.google,
+                                  user.role,
+                                  user.img,
+                                  user.userId
+                                )
+                              })
+
+                              return {
+                                totalUsers: resp.totalUsers,
+                                users
+                              }
+                            })
+                          );
+  }
+
   createUser(formData: RegisterForm){
     return this.httpClient.post(`${base_url}/usuarios`,formData);
   }
@@ -34,6 +60,11 @@ export class UserService {
     return this.httpClient.put(`${base_url}/usuarios/${this.user.userId}`,data,{headers:this.token})
   }
 
+  deleteUser(userId:string){
+
+    return this.httpClient.delete(`${base_url}/usuarios/${userId}`,{headers:this.token});
+  }
+
   login(formData: LoginForm){
     return this.httpClient.post(`${base_url}/auth`,formData);
   }
@@ -41,7 +72,6 @@ export class UserService {
   loginGoogle(token:string){
     return this.httpClient.post(`${base_url}/auth/google`,{token});
   }
-
   tokenValidate(): Observable<boolean>{
     const headers = new HttpHeaders().set('x-token', localStorage.getItem('token') || '');
 
@@ -56,6 +86,11 @@ export class UserService {
       }),
       catchError(err => of(false))
     );
+  }
+
+  updateRole(data:User){
+
+    return this.httpClient.put(`${base_url}/usuarios/${data.userId}`,data,{headers:this.token})
   }
 
   logout(){

@@ -4,6 +4,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
+import { UsersComponent } from './maintenance/users/users.component';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -19,37 +20,44 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent,
-        data:{title: 'Dashboard'}
+        data: { title: 'Dashboard' },
       },
       {
         path: 'progress',
         component: ProgressComponent,
-        data:{title: 'progress'}
+        data: { title: 'progress' },
       },
       {
         path: 'grafica1',
         component: Grafica1Component,
-        data:{title: 'grafica #1'}
+        data: { title: 'grafica #1' },
       },
       {
         path: 'account-settings',
         component: AccountSettingsComponent,
-        data:{title: 'ajuste de cuenta'}
+        data: { title: 'ajuste de cuenta' },
       },
       {
         path: 'promise',
         component: PromiseComponent,
-        data:{title: 'Promesa'}
+        data: { title: 'Promesa' },
       },
       {
         path: 'rxjs',
         component: RxjsComponent,
-        data:{title: 'Rxjs'}
+        data: { title: 'Rxjs' },
       },
       {
         path: 'profile',
         component: ProfileComponent,
-        data:{title: 'Perfil'}
+        data: { title: 'Perfil' },
+      },
+
+      // maintenance
+      {
+        path: 'usuarios',
+        component: UsersComponent,
+        data: { title: 'Usuarios de aplicacion' },
       },
     ],
   },
@@ -57,6 +65,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

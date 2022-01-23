@@ -16,6 +16,9 @@ export class User{
   ){}
 
   get imgUrl(){
+    if(!this.img){
+      return `${base_url}/subir/usuarios/no-img`
+    }
     //localhost:8080/api/subir/usuarios/no-img
     if(this.img.includes('https')){
       return this.img;
