@@ -43,6 +43,10 @@ export class SearchService {
     return result;
   }
 
+  searchAll(find:string){
+    return this.httpClient.get(`${base_url}/todo/${find}`,{headers:this.token})
+  }
+
   search(collection: string, find:string){
     return this.httpClient.get(`${base_url}/todo/${collection}/${find}`,{headers:this.token})
     .pipe(

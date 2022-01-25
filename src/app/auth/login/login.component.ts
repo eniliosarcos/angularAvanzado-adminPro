@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
           }
 
           localStorage.setItem('token', resp.token);
+          localStorage.setItem('menu', JSON.stringify(resp.menu));
           this.router.navigateByUrl('/');
         },(httpErrorResp:HttpErrorResponse) => {
           console.log(httpErrorResp)
@@ -86,6 +87,7 @@ export class LoginComponent implements OnInit {
           this.userService.loginGoogle(id_token).subscribe( (resp:any) =>{
 
             localStorage.setItem('token', resp.token);
+            localStorage.setItem('menu', JSON.stringify(resp.menu));
 
             this.ngZone.run(()=>{
               this.router.navigateByUrl('/');

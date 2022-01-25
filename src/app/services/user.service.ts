@@ -19,6 +19,10 @@ export class UserService {
   get token(){
     return new HttpHeaders().set('x-token', localStorage.getItem('token') || '')
   }
+
+  get role(): 'ADMIN_ROLE' | 'USER_ROLE' {
+    return this.user.role;
+  }
   constructor(private httpClient: HttpClient) { }
 
   getUsers(from:number = 0){
@@ -95,5 +99,6 @@ export class UserService {
 
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
   }
 }

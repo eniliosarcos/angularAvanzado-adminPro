@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -13,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromiseComponent } from './promise/promise.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -55,13 +57,13 @@ const routes: Routes = [
         component: ProfileComponent,
         data: { title: 'Perfil' },
       },
+      {
+        path: 'search/:term',
+        component: SearchComponent,
+        data: { title: 'Busquedas' },
+      },
 
       // maintenance
-      {
-        path: 'users',
-        component: UsersComponent,
-        data: { title: 'Mantenimiento de usuarios' },
-      },
       {
         path: 'hospitals',
         component: HospitalsComponent,
@@ -77,6 +79,14 @@ const routes: Routes = [
         component: MedicComponent,
         data: { title: 'Mantenimiento del medico' },
       },
+
+      //ADMIN ROUTES
+      {
+        path: 'users',
+        canActivate: [AdminGuard],
+        component: UsersComponent,
+        data: { title: 'Mantenimiento de usuarios' },
+      },
     ],
   },
 ];
@@ -85,4 +95,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }
